@@ -1,3 +1,5 @@
 # art_and_animations
 
-A new Flutter project.
+
+
+![Circular Indicator](screenshots/circular_indicator.png)
