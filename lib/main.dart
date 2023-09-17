@@ -1,4 +1,4 @@
-import 'package:art_and_animations/circular_indicator.dart';
+import 'package:art_and_animations/social_stories.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +11,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: CircularIndicator(),
+      home: SocialStories(),
     );
   }
 }
