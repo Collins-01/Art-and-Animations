@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 const imageUrl =
     "https://images.unsplash.com/photo-1541647249291-71c1d98ce84f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1976&q=80";
 
+final List<String> stories = [
+  imageUrl,
+];
+
 class SocialStories extends StatefulWidget {
   const SocialStories({super.key});
 
@@ -23,6 +27,12 @@ class _SocialStoriesState extends State<SocialStories>
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SizedBox(
@@ -32,7 +42,24 @@ class _SocialStoriesState extends State<SocialStories>
         children: [
           Positioned.fill(
             child: GestureDetector(
-              onTapDown: (details) {},
+              onTapDown: (details) {
+                print("OnTapDown: ${details.globalPosition}");
+                if (_animationController.isAnimating) {
+                  _animationController.stop();
+                }
+              },
+              onTapUp: (details) {
+                print("OnTapUp: ${details.globalPosition}");
+                if (!_animationController.isAnimating) {
+                  _animationController.forward();
+                }
+              },
+              onTapCancel: () {
+                print("OnTapCancel");
+                if (!_animationController.isDismissed) {
+                  _animationController.forward();
+                }
+              },
               child: Image.network(
                 imageUrl,
                 fit: BoxFit.cover,
@@ -52,7 +79,10 @@ class _SocialStoriesState extends State<SocialStories>
                     animation: _animationController,
                     builder: (context, child) {
                       return CustomPaint(
-                        size: Size(MediaQuery.of(context).size.width, 0),
+                        size: Size(
+                          MediaQuery.of(context).size.width,
+                          0,
+                        ),
                         painter: StoryIndicatorPainter(
                           defaultColor: Colors.grey,
                           indicatorColor: Colors.white,
@@ -77,6 +107,7 @@ class _SocialStoriesState extends State<SocialStories>
                         "Katarina Rostova",
                         style: TextStyle(
                           color: Colors.white,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       SizedBox(
