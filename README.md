@@ -7,3 +7,4 @@
 
 ### Social Media Stories
 ![Social Media Stories](screenshots/social_stories.png)
+![Social Media Stories 2](screenshots/social_stories_2.png)
