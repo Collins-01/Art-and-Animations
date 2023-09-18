@@ -33,6 +33,18 @@ class _SocialStoriesState extends State<SocialStories>
     // _animationControllers[0].addListener(() {
     //   _handleNext();
     // });
+    for (var i = 0; i < _animationControllers.length; i++) {
+      _animationControllers[i].addListener(() {
+        final currentController = _animationControllers[i];
+        bool hasNext = (i + 1) < stories.length;
+        if (currentController.isCompleted && hasNext) {
+          setState(() {
+            _currentAnimatingIndex++;
+          });
+          _animationControllers[_currentAnimatingIndex].forward();
+        }
+      });
+    }
 
     super.initState();
   }
@@ -248,4 +260,29 @@ class StoryIndicatorPainter extends CustomPainter {
   bool shouldRepaint(covariant StoryIndicatorPainter oldDelegate) {
     return oldDelegate.progress != progress;
   }
+}
+
+class CustomPageTransition extends PageRouteBuilder {
+  final Widget page;
+
+  CustomPageTransition({required this.page})
+      : super(
+          pageBuilder: (context, animation, secondaryAnimation) => page,
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(1.0, 0.0); // Start off-screen to the right
+            const end = Offset(0.0, 0.0); // End at the center of the screen
+            const curve = Curves.easeInOut;
+
+            var tween = Tween(begin: begin, end: end).chain(
+              CurveTween(curve: curve),
+            );
+
+            var offsetAnimation = animation.drive(tween);
+
+            return SlideTransition(
+              position: offsetAnimation,
+              child: child,
+            );
+          },
+        );
 }
