@@ -10,8 +10,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _peCacheImages(context);
     return const MaterialApp(
       home: SocialStories(),
     );
   }
+}
+
+_peCacheImages(BuildContext context) {
+  precacheImage(const AssetImage("assets/images/golfoyle.JPG"), context);
+  precacheImage(const AssetImage("assets/images/wolf.jpeg"), context);
+  precacheImage(const AssetImage("assets/images/workspace.jpeg"), context);
 }
