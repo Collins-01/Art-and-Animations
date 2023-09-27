@@ -1,4 +1,4 @@
-import 'package:art_and_animations/social_stories.dart';
+import 'package:art_and_animations/page_routing_animations.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +12,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     _peCacheImages(context);
     return const MaterialApp(
-      home: SocialStories(),
+      home: PageA(),
     );
   }
 }
