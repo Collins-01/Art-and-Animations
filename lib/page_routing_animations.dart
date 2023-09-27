@@ -35,15 +35,45 @@ class PageA extends StatelessWidget {
   Route _createRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => const PageB(),
-      transitionDuration: const Duration(milliseconds: 800),
+      transitionDuration: const Duration(milliseconds: 500),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(0.0, 1.0); //beging from the bottom of the page
+        const begin = Offset(1.0, 1);
         const end = Offset.zero; // ends at the top of the page
         var curve = Curves.easeIn;
         var curveTween = CurveTween(curve: curve);
         final tween = Tween(begin: begin, end: end).chain(curveTween);
-        return SlideTransition(
-          position: animation.drive(tween),
+        // return SlideTransition(
+        //   position: animation.drive(tween),
+        //   child: child,
+        // );
+
+        // return FadeTransition(
+        //   opacity: animation,
+        //   child: child,
+        // );
+        // return ScaleTransition(
+        //   scale: animation,
+        //   child: child,
+        // );
+        // return Align(
+        //   child: SizeTransition(
+        //     sizeFactor: animation,
+        //     axisAlignment: 0.0,
+        //     child: child,
+        //   ),
+        // );
+        animation = CurvedAnimation(
+          parent: animation,
+          curve: Curves.bounceOut,
+        );
+        //   return RotationTransition(
+        //     turns: animation,
+        //     child: child,
+        //   );
+        // },
+
+        return ScaleTransition(
+          scale: animation,
           child: child,
         );
       },
