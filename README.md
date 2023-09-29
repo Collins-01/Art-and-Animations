@@ -8,3 +8,8 @@
 ### Social Media Stories
 ![Social Media Stories](screenshots/social_stories.png)
 ![Social Media Stories 2](screenshots/social_stories_2.png)
+
+
+# Hero Animations
+## Radial Animation
+![Radial Animation](gifs/radial_animation.gif)

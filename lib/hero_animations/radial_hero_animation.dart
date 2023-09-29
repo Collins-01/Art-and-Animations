@@ -122,7 +122,7 @@ class RadialExpansionDemo extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 PageRouteBuilder<void>(
-                  transitionDuration: const Duration(seconds: 6),
+                  transitionDuration: const Duration(milliseconds: 500),
                   pageBuilder: (context, animation, secondaryAnimation) {
                     return AnimatedBuilder(
                         animation: animation,
