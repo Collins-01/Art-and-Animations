@@ -11,5 +11,5 @@
 
 
 # Hero Animations
-## Radial Animation
+## Radial Hero Animation
 ![Radial Animation](gifs/radial_animation.gif)

@@ -1,5 +1,13 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math' show sqrt2;
+
+import 'package:flutter/material.dart';
+
+const double kMinRadius = 32.0;
+const double kMaxRadius = 128.0;
+RectTween _createRectTween(Rect? begin, Rect? end) {
+  return MaterialRectCenterArcTween(begin: begin, end: end);
+}
 
 class Photo extends StatelessWidget {
   const Photo({
@@ -55,57 +63,13 @@ class RadialExpansion extends StatelessWidget {
   }
 }
 
-class RadialExpansionDemo extends StatelessWidget {
-  const RadialExpansionDemo({super.key});
+class RadialExpansionDemoPageA extends StatelessWidget {
+  const RadialExpansionDemoPageA({super.key});
 
   static double kMinRadius = 32.0;
   static double kMaxRadius = 128.0;
   static Interval opacityCurve =
       const Interval(0.0, 0.75, curve: Curves.fastOutSlowIn);
-
-  static RectTween _createRectTween(Rect? begin, Rect? end) {
-    return MaterialRectCenterArcTween(begin: begin, end: end);
-  }
-
-  static Widget _buildPage(
-      BuildContext context, String imageName, String description) {
-    return Container(
-      color: Theme.of(context).canvasColor,
-      child: Center(
-        child: Card(
-          elevation: 8,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                width: kMaxRadius * 2.0,
-                height: kMaxRadius * 2.0,
-                child: Hero(
-                  createRectTween: _createRectTween,
-                  tag: imageName,
-                  child: RadialExpansion(
-                    maxRadius: kMaxRadius,
-                    child: Photo(
-                      photo: imageName,
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              Text(
-                description,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-                textScaleFactor: 3,
-              ),
-              const SizedBox(height: 16),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
   Widget _buildHero(
       BuildContext context, String imageName, String description) {
@@ -125,13 +89,17 @@ class RadialExpansionDemo extends StatelessWidget {
                   transitionDuration: const Duration(milliseconds: 500),
                   pageBuilder: (context, animation, secondaryAnimation) {
                     return AnimatedBuilder(
-                        animation: animation,
-                        builder: (context, child) {
-                          return Opacity(
-                            opacity: opacityCurve.transform(animation.value),
-                            child: _buildPage(context, imageName, description),
-                          );
-                        });
+                      animation: animation,
+                      builder: (context, child) {
+                        return Opacity(
+                          opacity: opacityCurve.transform(animation.value),
+                          child: RadialExpansionDemoPageB(
+                            description: description,
+                            imageName: imageName,
+                          ),
+                        );
+                      },
+                    );
                   },
                 ),
               );
@@ -144,8 +112,6 @@ class RadialExpansionDemo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const timeDilation = 5.0; // 1.0 is normal animation speed.
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Radial Transition Demo'),
@@ -160,6 +126,58 @@ class RadialExpansionDemo extends StatelessWidget {
             _buildHero(context, 'assets/images/workspace.jpeg', 'Workspace'),
             // _buildHero(context, 'images/beachball-alpha.png', 'Beach ball'),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class RadialExpansionDemoPageB extends StatelessWidget {
+  final String imageName;
+  final String description;
+  const RadialExpansionDemoPageB({
+    Key? key,
+    required this.imageName,
+    required this.description,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        color: Theme.of(context).canvasColor,
+        child: Center(
+          child: Card(
+            elevation: 8,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  width: kMaxRadius * 2.0,
+                  height: kMaxRadius * 2.0,
+                  child: Hero(
+                    createRectTween: _createRectTween,
+                    tag: imageName,
+                    child: RadialExpansion(
+                      maxRadius: kMaxRadius,
+                      child: Photo(
+                        photo: imageName,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Text(
+                  description,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  textScaleFactor: 3,
+                ),
+                const SizedBox(height: 16),
+              ],
+            ),
+          ),
         ),
       ),
     );
