@@ -11,41 +11,43 @@ class ChartView extends StatefulWidget {
 class _ChartViewState extends State<ChartView> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      body: Center(
+        child: CustomPaint(
+          painter: ChartCustomPainter(),
+        ),
+      ),
+    );
   }
 }
 
 class ChartCustomPainter extends CustomPainter {
-  final List<double> data;
-  final double minY;
-  final double maxY;
-  final double percentage;
-  final Color lineColor;
-  ChartCustomPainter({
-    required this.data,
-    required this.minY,
-    required this.maxY,
-    required this.percentage,
-    required this.lineColor,
-  });
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
-      ..color = lineColor
+      ..color = Colors.green
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2
+      ..strokeWidth = 10
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
 
-    final yAxis = maxY - minY;
+    var path = Path();
+    var height = size.height / 2;
+    var width = size.width / 2;
+    // path.moveTo(0, height);
+    // path.lineTo(width, 300);
 
-    for (var i = 0; i < data.length; i++) {
-      final xPosition = size.width / data.length * (i + 1);
-      final yPosition = (1 - (data[i] - minY) / yAxis) * size.height;
-      if (i == 0) {
-      } else {
-        // canvas.drawLine(xPosition, p2, paint);
-      }
+    // canvas.drawPath(path, paint);
+
+    final dataPoints = [
+      const Offset(0, 50),
+      const Offset(50, 100),
+      const Offset(100, 75),
+      const Offset(150, 120),
+    ];
+
+    for (int i = 0; i < dataPoints.length - 1; i++) {
+      canvas.drawLine(dataPoints[i], dataPoints[i + 1], paint);
     }
   }
 

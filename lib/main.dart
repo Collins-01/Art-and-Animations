@@ -1,4 +1,4 @@
-import 'package:art_and_animations/circular_indicator.dart';
+import 'package:art_and_animations/chart_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +12,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     _peCacheImages(context);
     return const MaterialApp(
-      home: CircularIndicator(),
+      home: ChartView(),
     );
   }
 }
